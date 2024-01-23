@@ -1,5 +1,6 @@
 // Globals
 const todoList = document.getElementById("todo-list");
+const userSelect = document.getElementById("user-todo");
 let todos = [];
 let users = [];
 // Attach Events
@@ -31,6 +32,14 @@ function printTodo({id, userId, title, completed}){
     todoList.prepend(li);
 }
 
+function createUserOption(user){
+    const option = document.createElement("option");
+    option.value = user.id;
+    option.innerText = user.name;
+
+    userSelect.append(option);
+}
+
 // Event Logic
 function initApp(){
     Promise.all([getAllTodos(), getAllUsers()]).then(values =>{
@@ -39,7 +48,8 @@ function initApp(){
         console.log(users);
 
        // Отправить в разметку
-       todos.forEach(todo => printTodo(todo))
+       todos.forEach(todo => printTodo(todo));
+       users.forEach(user => createUserOption(user));
     })
 }
 
